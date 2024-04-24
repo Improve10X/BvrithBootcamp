@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MAD</string>
+    <string name="title_activity_categories">CategoriesActivity</string>
+    <string name="title_activity_categories_top_down">CategoriesTopDownActivity</string>
+</resources>
