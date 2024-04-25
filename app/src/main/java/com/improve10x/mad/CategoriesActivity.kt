@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +34,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.improve10x.mad.ui.theme.MADTheme
+import io.ktor.client.call.body
+import io.ktor.client.request.get
 
 class CategoriesActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,23 +93,18 @@ fun SportsItem() {
     CategoryItem("Sports", "")
 }
 
-data class Category(
-    val title: String,
-    val imageUrl: String
-)
-
 fun generateCategories(): List<Category> {
     return listOf(
-        Category("nuevo", "https://i.imgur.com/QkIa5tT.jpeg"),
-        Category("Electronics", "https://i.imgur.com/ZANVnHE.jpeg"),
-        Category("Furniture", "https://i.imgur.com/Qphac99.jpeg"),
-        Category("Shoes", "https://i.imgur.com/qNOjJje.jpeg"),
-        Category("Miscellaneous", "https://i.imgur.com/BG8J0Fj.jpg"),
-        Category("nuevo", "https://i.imgur.com/QkIa5tT.jpeg"),
-        Category("Electronics", "https://i.imgur.com/ZANVnHE.jpeg"),
-        Category("Furniture", "https://i.imgur.com/Qphac99.jpeg"),
-        Category("Shoes", "https://i.imgur.com/qNOjJje.jpeg"),
-        Category("Miscellaneous", "https://i.imgur.com/BG8J0Fj.jpg")
+        Category(1, "nuevo", "https://i.imgur.com/QkIa5tT.jpeg"),
+        Category(2, "Electronics", "https://i.imgur.com/ZANVnHE.jpeg"),
+        Category(3, "Furniture", "https://i.imgur.com/Qphac99.jpeg"),
+        Category(4, "Shoes", "https://i.imgur.com/qNOjJje.jpeg"),
+        Category(5, "Miscellaneous", "https://i.imgur.com/BG8J0Fj.jpg"),
+        Category(6, "nuevo", "https://i.imgur.com/QkIa5tT.jpeg"),
+        Category(7, "Electronics", "https://i.imgur.com/ZANVnHE.jpeg"),
+        Category(8,"Furniture", "https://i.imgur.com/Qphac99.jpeg"),
+        Category(9,"Shoes", "https://i.imgur.com/qNOjJje.jpeg"),
+        Category(10, "Miscellaneous", "https://i.imgur.com/BG8J0Fj.jpg")
 
     )
 }
@@ -114,15 +112,15 @@ fun generateCategories(): List<Category> {
 @Preview
 @Composable
 fun CategoriesGrid() {
-    val categories = generateCategories()
+    val viewModel = CategoryViewModel()
+    val categoriesState = viewModel.categories.collectAsState()
+    val categories = categoriesState.value
     LazyVerticalGrid(columns = GridCells.Fixed(2)) {
         items(categories) { category ->
-            CategoryItem(category.title, category.imageUrl)
+            CategoryItem(category.name, category.image)
         }
     }
 }
-
-
 
 
 
